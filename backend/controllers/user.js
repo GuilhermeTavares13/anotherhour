@@ -1,9 +1,9 @@
-const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const bcrypt = require('bcryptjs')
+const User = require('../models/user')
 
 exports.login = (req, res, next) => {
-   const email = req.body.email;
-   const password = req.body.password;
+   const email = req.body.email
+   const password = req.body.password
 
    User.findOne({ where: { email } })
    .then(user => {
@@ -19,9 +19,9 @@ exports.login = (req, res, next) => {
 }
 
 exports.postCreateUser = (req, res, next) => {
-   const name = req.body.name;
-   const email = req.body.email;
-   const password = req.body.password;
+   const name = req.body.name
+   const email = req.body.email
+   const password = req.body.password
 
    bcrypt.hash(password, 12)
       .then(hashedPassword => {
@@ -36,6 +36,6 @@ exports.postCreateUser = (req, res, next) => {
          console.log('User created successfully.');
          res.status(201).json({ message: 'User created!', userId: result.id })
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
 };
 
