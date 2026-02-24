@@ -1,12 +1,15 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
-exports.login = (req, res, next) => {
+exports.postLogin = (req, res, next) => {
    const email = req.body.email
    const password = req.body.password
 
    User.findOne({ where: { email } })
    .then(user => {
+      if (!user) {
+         res.status(401).json({ message: 'User not found!' })  
+      }
       return bcrypt.compare(password, user.password)
    })
    .then(result => {
