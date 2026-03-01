@@ -1,42 +1,45 @@
-require('dotenv').config()
-const express = require('express')
-const bodyParser = require('body-parser')
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
 
 // Models
-const User = require('./models/user')
-const Project = require('./models/project')
-const ProjectItem = require('./models/projectitem')
+const User = require('./models/user');
+const Project = require('./models/project');
+const ProjectItem = require('./models/projectitem');
 
-const sequelize = require('./util/database')
+const sequelize = require('./util/database');
 
-const userRoutes = require('./routes/user')
-const projectRoutes = require('./routes/project')
+const userRoutes = require('./routes/user');
+const projectRoutes = require('./routes/project');
 
-const app = express()
+const app = express();
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // CORS
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-  next()
-})
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // app.use(express.json());
 
-app.use('/user', userRoutes)
-app.use('/user/project', projectRoutes)
+app.use('/user', userRoutes);
+app.use('/user/project', projectRoutes);
 
 // Associations
-Project.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
-User.hasMany(Project)
-ProjectItem.belongsTo(Project, {constraints: true, onDelete: 'CASCADE'})
-Project.hasMany(ProjectItem)
+Project.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+User.hasMany(Project);
+ProjectItem.belongsTo(Project, {constraints: true, onDelete: 'CASCADE'});
+Project.hasMany(ProjectItem);
 
 sequelize
     .sync()
     .then(result => {
         app.listen(3000)
-    })
+    });

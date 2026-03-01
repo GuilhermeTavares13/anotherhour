@@ -10,7 +10,8 @@ export async function postLogin(email, password) {
             body: JSON.stringify({ email, password })
         }
     );
+
     const resData = await response.json();
 
-    return resData.user
+    return resData;
 }

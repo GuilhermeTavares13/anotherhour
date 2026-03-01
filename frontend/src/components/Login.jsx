@@ -3,10 +3,10 @@ import { postLogin } from "../utils/http"
 export default function Login() {
 
     async function handleFormAction(formData) {
-        const email = formData.get("email")
-        const password = formData.get("password")
-        console.log(email)
-        const user = await postLogin(email, password)
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const response = await postLogin(email, password);
+        console.log(response);
     }
 
     return (

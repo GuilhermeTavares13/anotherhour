@@ -2,12 +2,14 @@ const express = require('express');
 
 const projectController = require('../controllers/project');
 
+const isAuth = require('../middleware/is-auth');
+
 const router = express.Router();
 
-router.get('/', projectController.getAllProjects);
+router.get('/', isAuth, projectController.getAllProjects);
 
-router.get('/:id', projectController.getProject);
+router.get('/:id', isAuth, projectController.getProject);
 
-router.post('/create-project', projectController.postCreateProject)
+router.post('/create-project', isAuth, projectController.postCreateProject)
 
 module.exports = router
