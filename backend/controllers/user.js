@@ -10,29 +10,30 @@ exports.postLogin = async (req, res, next) => {
    User.findOne({ where: { email } })
       .then(user => {
          if (!user) {
-            res.status(401).json({ message: 'Wrong credentials!' });
+            res.status(401).json({ message: 'Wrong credentials!', token: null });
             return;
          }
          return bcrypt.compare(password, user.password)
             .then(result => {
                if (result) {
+                  console.log(user.id);
                   const token = jwt.sign(
                      {
                         email: user.email,
-                        userId: user.id
+                        sub: user.id
                      },
                      process.env.SECRETKEYJWT,
                      {expiresIn: '24h'}
                   );
-                  res.status(201).json({ message: 'User logged succesfully!', userId: user.id, token: token });
+                  res.status(201).json({ message: 'User logged succesfully!', token: token });
                   return;
                }
-               res.status(401).json({ message: 'Wrong credentials!' });
+               res.status(401).json({ message: 'Wrong credentials!', token: null });
                return;
             })
       })
       .catch(err => {
-         res.status(500).json({ message: 'Unexpected error!' })
+         res.status(500).json({ message: 'Unexpected error!', token: null })
       });
 }
 

@@ -1,12 +1,12 @@
-import { postLogin } from "../utils/http"
+import { postLogin } from "../lib/auth"
 
-export default function Login() {
+export default function LoginPage({ onLogin }) {
 
     async function handleFormAction(formData) {
         const email = formData.get("email");
         const password = formData.get("password");
-        const response = await postLogin(email, password);
-        console.log(response);
+        const user = await postLogin(email, password);
+        onLogin(user);
     }
 
     return (
@@ -14,9 +14,9 @@ export default function Login() {
             <h1>Login</h1>
             <form action={handleFormAction}>
                 <label htmlFor="email">E-Mail:</label>
-                <input type="email" name="email" id="email" required/>
+                <input type="email" name="email" id="email" required />
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" required/>
+                <input type="password" name="password" id="password" required />
                 <button type="submit">Login</button>
             </form>
         </div>
