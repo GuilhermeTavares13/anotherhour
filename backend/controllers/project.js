@@ -27,8 +27,8 @@ exports.getProject = (req, res, next) => {
 }
 
 exports.getAllProjects = (req, res, next) => {
-    const userId = req.body.userId
-
+    const userId = req.userId;
+    
     User
         .findOne({ where: { id: userId } })
         .then((user) => {

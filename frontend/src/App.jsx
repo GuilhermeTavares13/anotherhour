@@ -20,10 +20,10 @@ function App() {
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="/projects" element={
-          <PrivateRoute>
+          <PrivateRoute user={user}>
             <ProjectsPage user={user} />
           </PrivateRoute>} />
-        <Route path="/login" element={<LoginPage onlogin={handleLogin} />} />
+        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
       </Routes>
     </>
   )
