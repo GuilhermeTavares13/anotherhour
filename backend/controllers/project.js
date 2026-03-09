@@ -1,7 +1,7 @@
 const User = require('../models/user')
 
 exports.getProject = (req, res, next) => {
-    const userId = req.body.userId
+    const userId = req.userId
     const projectId = req.params.id
 
     User
@@ -18,8 +18,8 @@ exports.getProject = (req, res, next) => {
         .then((project) => {
             if (!project) {
                 res.status(401).json({ message: 'Project not found!', project: {} })
-            } 
-            res.status(200).json({ message: 'Project fetched successfully!', project })  
+            }
+            res.status(200).json({ message: 'Project fetched successfully!', project })
         })
         .catch(err => {
             res.status(500).json({ message: 'Failed to fetch project', project: {} })
@@ -28,7 +28,7 @@ exports.getProject = (req, res, next) => {
 
 exports.getAllProjects = (req, res, next) => {
     const userId = req.userId;
-    
+
     User
         .findOne({ where: { id: userId } })
         .then((user) => {
@@ -49,7 +49,7 @@ exports.getAllProjects = (req, res, next) => {
 }
 
 exports.postCreateProject = (req, res, next) => {
-    const userId = req.body.userId
+    const userId = req.userId
     const name = req.body.name
 
     User

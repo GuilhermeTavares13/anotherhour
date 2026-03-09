@@ -1,6 +1,11 @@
 import { postLogin } from "../lib/auth"
+import { Navigate } from "react-router"
 
-export default function LoginPage({ onLogin }) {
+export default function LoginPage({ onLogin, user }) {
+
+    if (user) {
+        return <Navigate to="/projects" replace />
+    }
 
     async function handleFormAction(formData) {
         const email = formData.get("email");

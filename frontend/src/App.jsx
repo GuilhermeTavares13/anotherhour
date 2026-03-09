@@ -4,6 +4,7 @@ import { getUser } from "./lib/auth";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
+import { ProjectPage } from "./pages/ProjectPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -21,9 +22,13 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/projects" element={
           <PrivateRoute user={user}>
-            <ProjectsPage user={user} />
+            <ProjectsPage />
           </PrivateRoute>} />
-        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+        <Route path="/projects/:id" element={
+          <PrivateRoute user={user}>
+            <ProjectPage />
+          </PrivateRoute>} />
+        <Route path="/login" element={<LoginPage onLogin={handleLogin} user={user} />} />
       </Routes>
     </>
   )
