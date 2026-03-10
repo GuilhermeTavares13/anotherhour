@@ -1,10 +1,11 @@
-import { postLogin } from "../lib/auth"
-import { Navigate } from "react-router"
+import { postLogin } from "../lib/auth";
+import { Navigate } from "react-router";
+import "../styles/ProjectsPage.css";
 
 export default function LoginPage({ onLogin, user }) {
 
     if (user) {
-        return <Navigate to="/projects" replace />
+        return <Navigate to="/projects" replace />;
     }
 
     async function handleFormAction(formData) {
@@ -16,14 +17,16 @@ export default function LoginPage({ onLogin, user }) {
 
     return (
         <div id="login">
-            <h1>Login</h1>
-            <form action={handleFormAction}>
-                <label htmlFor="email">E-Mail:</label>
-                <input type="email" name="email" id="email" required />
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" required />
-                <button type="submit">Login</button>
-            </form>
+            <div id='projects' className='projects-container'>
+                <h1 className="projects-title">Login</h1>
+                <form className="projects-header" action={handleFormAction}>
+                    <label htmlFor="email">E-Mail:</label>
+                    <input type="email" name="email" id="email" required className="projects-input" />
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" id="password" required className="projects-input"/>
+                    <button className="projects-add-btn" type="submit">Login</button>
+                </form>
+            </div>
         </div>
     )
 }

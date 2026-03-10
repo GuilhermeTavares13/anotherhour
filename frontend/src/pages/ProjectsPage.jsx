@@ -57,6 +57,7 @@ export function ProjectsPage({ user }) {
             <ul className="projects-list">
                 {projects.map(project => (
                     <li key={project.id} className="projects-list-item">
+                        <input type="checkbox" name="completed" id="completed" />
                         <Link to={`/projects/${project.id}`} className="projects-list-link">
                             {project.name}
                         </Link>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router";
 import { getUser } from "./lib/auth";
-import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { ProjectPage } from "./pages/ProjectPage";
@@ -19,7 +18,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<HomePage />} />
+        {/* <Route index element={<HomePage />} /> */}
         <Route path="/projects" element={
           <PrivateRoute user={user}>
             <ProjectsPage user={user} />
@@ -28,7 +27,7 @@ function App() {
           <PrivateRoute user={user}>
             <ProjectPage user={user}/>
           </PrivateRoute>} />
-        <Route path="/login" element={<LoginPage onLogin={handleLogin} user={user} />} />
+        <Route index path="/" element={<LoginPage onLogin={handleLogin} user={user} />} />
       </Routes>
     </>
   )

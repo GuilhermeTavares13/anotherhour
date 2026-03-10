@@ -9,15 +9,15 @@ export function ProjectPage() {
     const { id } = useParams();
 
     useEffect(() => {
-        LoadProject({ id }).then((project) => setProject(project[0]));
+        LoadProject(id).then((projects) => setProject(projects[0]));
     }, [id]);
 
     return (
         <div className="project-page-container">
             <h1>Project Details</h1>
-            {project?.name && (
+            {project.name && (
                 <div>
-                    <h2>{project?.name}</h2>
+                    <h2>{project.name}</h2>
                 </div>
             )}
         </div>

@@ -9,10 +9,7 @@ export async function DeleteProject(id) {
         headers: {
             'Authorization': 'Bearer ' + userToken,
             'Content-type': 'application/json'    
-        },
-        body: JSON.stringify({
-            id
-        })
+        }
     });
 }
 
@@ -41,15 +38,15 @@ export async function LoadProject(id) {
 
     const userToken = getAccessToken();
 
-    const response = await fetch('http://localhost:3000/user/project/' + id, {
+    const response = await fetch(`http://localhost:3000/user/project/${id}`, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + userToken
+            'Authorization': 'Bearer ' + userToken,
+            'Content-type': 'application/json' 
         }
     });
 
     const responseJson = await response.json();
-    console.log(responseJson);
     return responseJson.project;
 }
 
