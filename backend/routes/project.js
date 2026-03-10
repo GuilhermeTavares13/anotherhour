@@ -10,6 +10,8 @@ router.get('/', isAuth, projectController.getAllProjects);
 
 router.get('/:id', isAuth, projectController.getProject);
 
-router.post('/create-project', isAuth, projectController.postCreateProject)
+router.post('/create-project', isAuth, projectController.postCreateProject);
+
+router.post('/delete-project/:id', isAuth, projectController.postDeleteProject);
 
 module.exports = router

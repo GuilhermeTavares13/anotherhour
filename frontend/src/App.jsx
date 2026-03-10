@@ -22,11 +22,11 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/projects" element={
           <PrivateRoute user={user}>
-            <ProjectsPage />
+            <ProjectsPage user={user} />
           </PrivateRoute>} />
         <Route path="/projects/:id" element={
           <PrivateRoute user={user}>
-            <ProjectPage />
+            <ProjectPage user={user}/>
           </PrivateRoute>} />
         <Route path="/login" element={<LoginPage onLogin={handleLogin} user={user} />} />
       </Routes>

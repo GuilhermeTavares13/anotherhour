@@ -1,4 +1,5 @@
-const User = require('../models/user')
+const User = require('../models/user');
+const Project = require('../models/project');
 
 exports.getProject = (req, res, next) => {
     const userId = req.userId
@@ -72,4 +73,16 @@ exports.postCreateProject = (req, res, next) => {
         .catch(err => {
             res.status(500).json({ message: 'Failed to create project', project: {} })
         });
+}
+
+exports.postDeleteProject = async (req, res, next) => {
+    const projectId = req.params.id;
+
+    try {
+        const project = await Project.destroy({ where: { id: projectId } });
+        res.status(204).json({ message: 'Project delete successfully!'});
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Failed to delete project'})
+    }
 }

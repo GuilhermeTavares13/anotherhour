@@ -15,9 +15,9 @@ export function ProjectPage() {
     return (
         <div className="project-page-container">
             <h1>Project Details</h1>
-            {project.name && (
+            {project?.name && (
                 <div>
-                    <h2>{project.name}</h2>
+                    <h2>{project?.name}</h2>
                 </div>
             )}
         </div>
