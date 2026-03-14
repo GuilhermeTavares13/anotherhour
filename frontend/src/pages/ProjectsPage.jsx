@@ -1,7 +1,6 @@
 import { useEffect, useState, useActionState } from "react";
 import { Link } from "react-router";
 import { LoadProjects } from "../lib/http";
-import "../styles/ProjectsPage.css";
 import { CreateProject, DeleteProject } from "../lib/http";
 
 export function ProjectsPage({ user }) {
@@ -48,22 +47,37 @@ export function ProjectsPage({ user }) {
     const [formState, formAction] = useActionState(addProjectAction, { errors: null });
 
     return (
-        <div id='projects' className="projects-container">
-            <h1 className="projects-title">Projects</h1>
-            <form className="projects-header" action={formAction}>
-                <input name="name" type="text" className="projects-input" placeholder="Project name" required/>
-                <button className="projects-add-btn">Add new Project</button>
+        <div id='projects'>
+            <form action={formAction}>
+                <div className="field">
+                    <label htmlFor="name" className="label">Add Project</label>
+                    <div className="field has-addons">
+                        <div className="control is-expanded">
+                            <input className="input" name="name" type="text" placeholder="Project name" required/>
+                        </div>
+                        <div className="control">
+                            <button className="button is-light is info">Add new Project</button>
+                        </div>
+                    </div>
+                </div>
             </form>
-            <ul className="projects-list">
-                {projects.map(project => (
-                    <li key={project.id} className="projects-list-item">
-                        <input type="checkbox" name="completed" id="completed" />
-                        <Link to={`/projects/${project.id}`} className="projects-list-link">
-                            {project.name}
-                        </Link>
-                        <button onClick={() => handleDeleteProject(project.id)} className="projects-delete-btn">Delete</button>
-                    </li>
-                ))}
+            <ul className="mt-3">
+                <div className="fixed-grid has-auto-count">
+                    <div className="grid">
+                        {projects.map(project => (
+                            <li className="panel" key={project.id}>
+                                <div className="panel-block">
+                                    <Link to={`/projects/${project.id}`}>
+                                        <p className="panel-heading">{project.name}</p>
+                                    </Link>
+                                </div>
+                                <div className="panel-block">
+                                    <button className="button is-danger is-light is-small" onClick={() => handleDeleteProject(project.id)} >Delete</button>
+                                </div>
+                            </li>
+                        ))}
+                    </div>
+                </div>
             </ul>
         </div>
     );

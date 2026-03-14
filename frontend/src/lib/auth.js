@@ -23,6 +23,11 @@ export async function postLogin(email, password) {
     return getUserFromToken(token);
 }
 
+export async function handleUserLogout() {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return null;
+}
+
 export function getUser() {
     const token = getAccessToken();
     if(!token) {
@@ -39,6 +44,7 @@ function getUserFromToken(token) {
     const claims = jwtDecode(token);
     return {
         id: claims.sub,
-        email: claims.email
+        email: claims.email,
+        name: claims.name
     }
 }
