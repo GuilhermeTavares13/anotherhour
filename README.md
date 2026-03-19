@@ -1,13 +1,6 @@
 ﻿# anotherhour
 
-It's not working yet, but you can now easily run the frontend using Docker!
-Just run:
-
-cd frontend
-
-docker build .
-
-docker run -p 4000:4000 image
+It's not working yet...
 
 
 
