@@ -28,7 +28,7 @@ function LoginPage() {
                                 </div>
                             </div>
                             <div className="field">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">Password:</Label>
                                 <Input type="password" name="password" id="password" required />
                             </div>
                         </div>
