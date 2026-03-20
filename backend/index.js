@@ -1,36 +1,11 @@
 require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
+const app = require('./app');
 
 // Models
 const User = require('./models/user');
 const Project = require('./models/project');
 const ProjectItem = require('./models/projectitem');
-
 const sequelize = require('./util/database');
-
-const userRoutes = require('./routes/user');
-const projectRoutes = require('./routes/project');
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// CORS
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-  );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
-app.use('/user', userRoutes);
-app.use('/user/project', projectRoutes);
 
 // Associations
 Project.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
