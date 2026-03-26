@@ -3,7 +3,6 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 exports.postLogin = async (req, res, next) => {
-
    const email = req.body.email;
    const password = req.body.password;
 
@@ -16,7 +15,6 @@ exports.postLogin = async (req, res, next) => {
          return bcrypt.compare(password, user.password)
             .then(result => {
                if (result) {
-                  console.log(user.id);
                   const token = jwt.sign(
                      {
                         email: user.email,
