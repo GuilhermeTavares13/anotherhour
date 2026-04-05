@@ -1,5 +1,4 @@
 export const onLogin = async (user: { email: string, password: string }) => {
-    console.log(user);
     try {
         const response = await fetch('http://localhost:3000/user/login', {
             method: 'POST',
@@ -19,10 +18,11 @@ export const onLogin = async (user: { email: string, password: string }) => {
 
         localStorage.setItem('UserToken', jwtToken);
 
-        return responseJSON;
+        return true;
     }
     catch (error) {
-       console.log('Error during login:', error.message);
+        console.log('Error during login:', error.message);
+        return false;
     }
 }
 
