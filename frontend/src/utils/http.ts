@@ -1,3 +1,6 @@
+import { store } from '@/store';
+import { setToken } from '@/features/auth/authSlice';
+
 export const onLogin = async (user: { email: string, password: string }) => {
     try {
         const response = await fetch('http://localhost:3000/user/login', {
@@ -16,7 +19,7 @@ export const onLogin = async (user: { email: string, password: string }) => {
 
         const jwtToken: string = responseJSON.token;
 
-        localStorage.setItem('UserToken', jwtToken);
+        store.dispatch(setToken(jwtToken));
 
         return true;
     }

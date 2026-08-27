@@ -10,11 +10,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { onLogin } from "@/utils/http";
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = () => onLogin({ email, password });
     
@@ -43,7 +45,7 @@ function LoginPage() {
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
                     <Button className="w-full" onClick={handleLogin}>Login</Button>
-                    <Button variant="outline" className="w-full">Sign Up</Button>
+                    <Button variant="outline" className="w-full" onClick={() => navigate('/signup')}>Sign Up</Button>
                 </CardFooter>
             </Card>
         </div>

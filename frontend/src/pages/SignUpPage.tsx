@@ -56,7 +56,7 @@ function SignUpPage() {
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
                     <Button className="w-full" onClick={handleSignup}>Sign Up</Button>
-                    <Button variant="outline" className="w-full">Login</Button>
+                    <Button variant="outline" className="w-full" onClick={() => navigate('/login')}>Already have an Account</Button>
                 </CardFooter>
             </Card>
         </div>
