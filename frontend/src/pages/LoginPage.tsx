@@ -18,7 +18,10 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = () => onLogin({ email, password });
+    const handleLogin = async () => {
+        const ok = await onLogin({ email, password });
+        if (ok) navigate('/');
+    };
     
     return (
         <div className="flex min-h-screen w-full items-center justify-center">
