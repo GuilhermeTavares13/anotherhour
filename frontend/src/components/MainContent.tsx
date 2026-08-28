@@ -10,18 +10,7 @@ import { useNavigate } from 'react-router';
 import type { RootState } from '@/store';
 import { setToken } from '@/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
-
-const getUserName = (token: string | null) => {
-    if (!token) return '';
-
-    try {
-        const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-        const padded = base64.padEnd(base64.length + ((4 - base64.length % 4) % 4), '=');
-        return (JSON.parse(atob(padded)) as { name?: string }).name ?? '';
-    } catch {
-        return '';
-    }
-}
+import { getUserName } from '@/utils/user';
 
 export function MainContent() {
     const token = useSelector((state: RootState) => state.auth.token);
