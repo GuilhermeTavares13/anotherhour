@@ -126,4 +126,7 @@
   html {
     @apply font-sans;
     }
+  #root {
+    @apply p-2.5;
+    }
 }

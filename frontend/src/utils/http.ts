@@ -51,5 +51,63 @@ export const onSignup = async (user: { name: string, email: string, password: st
     }
 }
 
+export interface Project {
+    id: number;
+    name: string;
+    userId: number;
+}
+
+export const getProjects = async (token: string | null): Promise<Project[]> => {
+    if (!token) return [];
+
+    try {
+        const response = await fetch('http://localhost:3000/user/project', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch projects.');
+        }
+
+        const responseJSON = await response.json();
+
+        return responseJSON.projects ?? [];
+    }
+    catch (error) {
+        console.log('Error during fetching projects:', (error as Error).message);
+        return [];
+    }
+}
+
+export const createProject = async (token: string | null, name: string): Promise<Project | null> => {
+    if (!token) return null;
+
+    try {
+        const response = await fetch('http://localhost:3000/user/project/create-project', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create project.');
+        }
+
+        const responseJSON = await response.json();
+
+        return responseJSON.project ?? null;
+    }
+    catch (error) {
+        console.log('Error during creating project:', (error as Error).message);
+        return null;
+    }
+}
+
 
 

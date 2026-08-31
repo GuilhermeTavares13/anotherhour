@@ -1,56 +1,48 @@
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
-import { getUserName } from "@/utils/user";
+import Navbar from "@/components/Navbar";
+import CreateProjectModal from "@/components/CreateProjectModal";
+import { getProjects, type Project } from "@/utils/http";
 import {
-    NavigationMenu,
-    NavigationMenuList,
-    NavigationMenuItem,
-    NavigationMenuContent,
-    NavigationMenuLink,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle
-} from "@/components/ui/navigation-menu";
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselPrevious,
+    CarouselNext
+} from "@/components/ui/carousel";
 
 function MainPage() {
     const token = useSelector((state: RootState) => state.auth.token);
-    const userName = getUserName(token);
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        getProjects(token).then(setProjects);
+    }, [token]);
 
     return (
         <>
-            <NavigationMenu>
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link to="/">{userName}</Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>Projects</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="grid w-[400px] max-w-[80vw] grid-cols-1 gap-1 p-1 md:grid-cols-2">
-                                <li>
-                                    <NavigationMenuLink asChild>
-                                        <Link to="/projects" className="flex flex-col gap-1 rounded-sm p-2 hover:bg-muted">
-                                            <span className="text-sm font-medium">Add project</span>
-                                            <span className="text-xs text-muted-foreground">Create a new project</span>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                </li>
-                                <li>
-                                    <NavigationMenuLink asChild>
-                                        <Link to="/projects" className="flex flex-col gap-1 rounded-sm p-2 hover:bg-muted">
-                                            <span className="text-sm font-medium">List of projects</span>
-                                            <span className="text-xs text-muted-foreground">Browse your projects</span>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                </li>
-                            </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
+            <Navbar />
             <main className="flex flex-col w-full">
+                <Carousel className="w-full max-w-xs mx-auto">
+                    <CarouselContent>
+                        {projects.length === 0 ? (
+                            <CarouselItem className="basis-full">
+                                <CreateProjectModal onCreated={() => getProjects(token).then(setProjects)} />
+                            </CarouselItem>
+                        ) : (
+                            projects.map((project) => (
+                                <CarouselItem key={project.id} className="basis-1/5">
+                                    <div className="flex aspect-square items-center justify-center rounded-lg bg-muted p-2">
+                                        <span className="text-sm font-semibold text-center">{project.name}</span>
+                                    </div>
+                                </CarouselItem>
+                            ))
+                        )}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </Carousel>
             </main>
         </>
     );
